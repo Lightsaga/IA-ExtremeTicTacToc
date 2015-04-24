@@ -1,0 +1,8 @@
+c:\users\jorge\documents\visual studio 2013\Projects\IA-ExtremeTicTacToc\IA-ExtremeTicTacToc\bin\Debug\IA-ExtremeTicTacToc.exe.config
+c:\users\jorge\documents\visual studio 2013\Projects\IA-ExtremeTicTacToc\IA-ExtremeTicTacToc\bin\Debug\IA-ExtremeTicTacToc.exe
+c:\users\jorge\documents\visual studio 2013\Projects\IA-ExtremeTicTacToc\IA-ExtremeTicTacToc\bin\Debug\IA-ExtremeTicTacToc.pdb
+c:\users\jorge\documents\visual studio 2013\Projects\IA-ExtremeTicTacToc\IA-ExtremeTicTacToc\obj\Debug\IA_ExtremeTicTacToc.TictacForm.resources
+c:\users\jorge\documents\visual studio 2013\Projects\IA-ExtremeTicTacToc\IA-ExtremeTicTacToc\obj\Debug\IA_ExtremeTicTacToc.Properties.Resources.resources
+c:\users\jorge\documents\visual studio 2013\Projects\IA-ExtremeTicTacToc\IA-ExtremeTicTacToc\obj\Debug\IA-ExtremeTicTacToc.csproj.GenerateResource.Cache
+c:\users\jorge\documents\visual studio 2013\Projects\IA-ExtremeTicTacToc\IA-ExtremeTicTacToc\obj\Debug\IA-ExtremeTicTacToc.exe
+c:\users\jorge\documents\visual studio 2013\Projects\IA-ExtremeTicTacToc\IA-ExtremeTicTacToc\obj\Debug\IA-ExtremeTicTacToc.pdb
