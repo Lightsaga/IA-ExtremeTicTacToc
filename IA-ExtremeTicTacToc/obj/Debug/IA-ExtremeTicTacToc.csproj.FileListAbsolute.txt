@@ -6,3 +6,12 @@ c:\users\jorge\documents\visual studio 2013\Projects\IA-ExtremeTicTacToc\IA-Extr
 c:\users\jorge\documents\visual studio 2013\Projects\IA-ExtremeTicTacToc\IA-ExtremeTicTacToc\obj\Debug\IA-ExtremeTicTacToc.csproj.GenerateResource.Cache
 c:\users\jorge\documents\visual studio 2013\Projects\IA-ExtremeTicTacToc\IA-ExtremeTicTacToc\obj\Debug\IA-ExtremeTicTacToc.exe
 c:\users\jorge\documents\visual studio 2013\Projects\IA-ExtremeTicTacToc\IA-ExtremeTicTacToc\obj\Debug\IA-ExtremeTicTacToc.pdb
+C:\Users\Oscar\Documents\GitHub\IA-ExtremeTicTacToc\IA-ExtremeTicTacToc\bin\Debug\IA-ExtremeTicTacToc.exe.config
+C:\Users\Oscar\Documents\GitHub\IA-ExtremeTicTacToc\IA-ExtremeTicTacToc\obj\Debug\IA-ExtremeTicTacToc.exe
+C:\Users\Oscar\Documents\GitHub\IA-ExtremeTicTacToc\IA-ExtremeTicTacToc\obj\Debug\IA-ExtremeTicTacToc.pdb
+C:\Users\Oscar\Documents\GitHub\IA-ExtremeTicTacToc\IA-ExtremeTicTacToc\bin\Debug\IA-ExtremeTicTacToc.exe
+C:\Users\Oscar\Documents\GitHub\IA-ExtremeTicTacToc\IA-ExtremeTicTacToc\bin\Debug\IA-ExtremeTicTacToc.pdb
+C:\Users\Oscar\Documents\GitHub\IA-ExtremeTicTacToc\IA-ExtremeTicTacToc\obj\Debug\IA-ExtremeTicTacToc.csprojResolveAssemblyReference.cache
+C:\Users\Oscar\Documents\GitHub\IA-ExtremeTicTacToc\IA-ExtremeTicTacToc\obj\Debug\IA_ExtremeTicTacToc.TictacForm.resources
+C:\Users\Oscar\Documents\GitHub\IA-ExtremeTicTacToc\IA-ExtremeTicTacToc\obj\Debug\IA_ExtremeTicTacToc.Properties.Resources.resources
+C:\Users\Oscar\Documents\GitHub\IA-ExtremeTicTacToc\IA-ExtremeTicTacToc\obj\Debug\IA-ExtremeTicTacToc.csproj.GenerateResource.Cache
