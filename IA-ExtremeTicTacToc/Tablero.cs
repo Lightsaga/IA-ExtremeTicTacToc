@@ -11,6 +11,7 @@ namespace IA_ExtremeTicTacToc
     public class Tablero
     {
         public Celda[,] Matrix;
+        public int estado;
         
         public Tablero()
         {

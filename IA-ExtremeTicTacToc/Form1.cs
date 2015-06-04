@@ -17,6 +17,7 @@ namespace IA_ExtremeTicTacToc
         bool PrimerMov = false;
         int PerX = 0;
         int PerY = 0;
+        Point tableroActual;
 
         public TictacForm()
         {
@@ -86,32 +87,39 @@ namespace IA_ExtremeTicTacToc
                         {
                             if ((e.X >= Tableros[i, j].Matrix[k, l].Coordinates.X && e.X < Tableros[i, j].Matrix[k, l].Coordinates.X + 60) && (e.Y >= Tableros[i, j].Matrix[k, l].Coordinates.Y && e.Y < Tableros[i, j].Matrix[k, l].Coordinates.Y + 60) && PrimerMov == false)
                             {
-                                g.DrawLine(new Pen(Color.Red, 10), Tableros[i, j].Matrix[k, l].Coordinates.X, Tableros[i, j].Matrix[k, l].Coordinates.Y, Tableros[i, j].Matrix[k, l].Coordinates.X + 60, Tableros[i, j].Matrix[k, l].Coordinates.Y + 60);
-                                g.DrawLine(new Pen(Color.Red, 10), Tableros[i, j].Matrix[k, l].Coordinates.X + 60, Tableros[i, j].Matrix[k, l].Coordinates.Y, Tableros[i, j].Matrix[k, l].Coordinates.X, Tableros[i, j].Matrix[k, l].Coordinates.Y + 60);
+                                g.DrawEllipse(new Pen(Color.Red, 10), Tableros[i, j].Matrix[k, l].Coordinates.X, Tableros[i, j].Matrix[k, l].Coordinates.Y, 60, 60);
                                 turno = true;
                                 PrimerMov = true;
                                 Tableros[i, j].Matrix[k, l].state = 1;
                                 PerX = k;
                                 PerY = l;
+                                tableroActual.X = i;
+                                tableroActual.Y = j;
                                 label2.Text = "Turno de Jugador 2";
                             }
                             else if ((e.X >= Tableros[PerX, PerY].Matrix[k, l].Coordinates.X && e.X < Tableros[PerX, PerY].Matrix[k, l].Coordinates.X + 60) && (e.Y >= Tableros[PerX, PerY].Matrix[k, l].Coordinates.Y && e.Y < Tableros[PerX, PerY].Matrix[k, l].Coordinates.Y + 60) && PrimerMov == true)
                             {
                                 if (turno == false && Tableros[PerX, PerY].Matrix[k, l].state == 0)
                                 {
-                                    g.DrawLine(new Pen(Color.Red, 10), Tableros[PerX, PerY].Matrix[k, l].Coordinates.X, Tableros[PerX, PerY].Matrix[k, l].Coordinates.Y, Tableros[PerX, PerY].Matrix[k, l].Coordinates.X + 60, Tableros[PerX, PerY].Matrix[k, l].Coordinates.Y + 60);
-                                    g.DrawLine(new Pen(Color.Red, 10), Tableros[PerX, PerY].Matrix[k, l].Coordinates.X + 60, Tableros[PerX, PerY].Matrix[k, l].Coordinates.Y, Tableros[PerX, PerY].Matrix[k, l].Coordinates.X, Tableros[PerX, PerY].Matrix[k, l].Coordinates.Y + 60);
+                                    g.DrawEllipse(new Pen(Color.Red, 10), Tableros[PerX, PerY].Matrix[k, l].Coordinates.X, Tableros[PerX, PerY].Matrix[k, l].Coordinates.Y, 60, 60);
                                     turno = true;
                                     Tableros[PerX, PerY].Matrix[k, l].state = 1;
+                                    tableroActual.X = PerX;
+                                    tableroActual.Y = PerY;
                                     PerX = k;
                                     PerY = l;
+                                    
                                     label2.Text = "Turno de Jugador 2";
                                 }
                                 else if (turno == true && Tableros[PerX, PerY].Matrix[k, l].state == 0)
                                 {
-                                    g.DrawEllipse(new Pen(Color.Red, 10), Tableros[PerX, PerY].Matrix[k, l].Coordinates.X, Tableros[PerX, PerY].Matrix[k, l].Coordinates.Y, 60, 60);
+                                    g.DrawLine(new Pen(Color.Red, 10), Tableros[PerX, PerY].Matrix[k, l].Coordinates.X, Tableros[PerX, PerY].Matrix[k, l].Coordinates.Y, Tableros[PerX, PerY].Matrix[k, l].Coordinates.X + 60, Tableros[PerX, PerY].Matrix[k, l].Coordinates.Y + 60);
+                                    g.DrawLine(new Pen(Color.Red, 10), Tableros[PerX, PerY].Matrix[k, l].Coordinates.X + 60, Tableros[PerX, PerY].Matrix[k, l].Coordinates.Y, Tableros[PerX, PerY].Matrix[k, l].Coordinates.X, Tableros[PerX, PerY].Matrix[k, l].Coordinates.Y + 60);
+                                    
                                     turno = false;
-                                    Tableros[PerX, PerY].Matrix[k, l].state = 1;
+                                    Tableros[PerX, PerY].Matrix[k, l].state = 2;
+                                    tableroActual.X = PerX;
+                                    tableroActual.Y = PerY;
                                     PerX = k;
                                     PerY = l;
                                     label2.Text = "Turno de Jugador 1";
@@ -121,6 +129,114 @@ namespace IA_ExtremeTicTacToc
                     }
                 }
             }
+            RevisarEstadosTableroParcial();
         }
+
+        public void RevisarEstadosTableroParcial()
+        {
+            Tablero T = Tableros[tableroActual.X, tableroActual.Y];
+            Graphics g = pbCanvas.CreateGraphics();
+
+            bool Ganar = false;
+            //Horizontales
+            for (int i = 0; i < 3; i++)
+            {
+                if (T.Matrix[0, i].state == 1 && T.Matrix[1, i].state == 1 && T.Matrix[2, i].state == 1)
+                {
+                    Ganar = true;
+                    g.DrawLine(new Pen(Color.Red, 10), T.Matrix[0, i].Coordinates.X, T.Matrix[0, i].Coordinates.Y + 30, T.Matrix[2, i].Coordinates.X + 60, T.Matrix[2, i].Coordinates.Y + 30);
+                }
+                if (T.Matrix[0, i].state == 2 && T.Matrix[1, i].state == 2 && T.Matrix[2, i].state == 2)
+                {
+                    Ganar = true;
+                    g.DrawLine(new Pen(Color.Red, 10), T.Matrix[0, i].Coordinates.X, T.Matrix[0, i].Coordinates.Y + 30, T.Matrix[2, i].Coordinates.X + 60, T.Matrix[2, i].Coordinates.Y + 30);
+                }
+            }
+            //Verticales
+            for (int i = 0; i < 3; i++)
+            {
+                if (T.Matrix[i, 0].state == 1 && T.Matrix[i, 1].state == 1 && T.Matrix[i, 2].state == 1)
+                {
+                    Ganar = true;
+                    g.DrawLine(new Pen(Color.Red, 10), T.Matrix[i, 0].Coordinates.X + 30, T.Matrix[i, 0].Coordinates.Y, T.Matrix[i, 2].Coordinates.X + 30, T.Matrix[i, 2].Coordinates.Y + 60);
+                    for (int j = 0; j < 3; j++)
+                    {
+                        for (int k = 0; k < 3; k++)
+                        {
+                            T.Matrix[j, k].state = 1;
+                        }
+                    }
+                }
+                if (T.Matrix[i, 0].state == 2 && T.Matrix[i, 1].state == 2 && T.Matrix[i, 2].state == 2)
+                {
+                    Ganar = true;
+                    g.DrawLine(new Pen(Color.Red, 10), T.Matrix[i, 0].Coordinates.X + 30, T.Matrix[i, 0].Coordinates.Y, T.Matrix[i, 2].Coordinates.X + 30, T.Matrix[i, 2].Coordinates.Y + 60);
+                    for (int j = 0; j < 3; j++)
+                    {
+                        for (int k = 0; k < 3; k++)
+                        {
+                            T.Matrix[j, k].state = 2;
+                        }
+                    }
+                }
+            }
+            //Diagonales
+            if (T.Matrix[0, 0].state == 1 && T.Matrix[1, 1].state == 1 && T.Matrix[2, 2].state == 1)
+            {
+                Ganar = true;
+                g.DrawLine(new Pen(Color.Red, 10), T.Matrix[0, 0].Coordinates.X, T.Matrix[0, 0].Coordinates.Y, T.Matrix[2, 2].Coordinates.X + 60, T.Matrix[2, 2].Coordinates.Y + 60);
+                for (int j = 0; j < 3; j++)
+                {
+                    for (int k = 0; k < 3; k++)
+                    {
+                        T.Matrix[j, k].state = 1;
+                    }
+                }
+            }
+            if (T.Matrix[0, 0].state == 2 && T.Matrix[1, 1].state == 2 && T.Matrix[2, 2].state == 2)
+            {
+                Ganar = true;
+                g.DrawLine(new Pen(Color.Red, 10), T.Matrix[0, 0].Coordinates.X, T.Matrix[0, 0].Coordinates.Y, T.Matrix[2, 2].Coordinates.X + 60, T.Matrix[2, 2].Coordinates.Y + 60);
+                for (int j = 0; j < 3; j++)
+                {
+                    for (int k = 0; k < 3; k++)
+                    {
+                        T.Matrix[j, k].state = 2;
+                    }
+                }
+            }
+            if (T.Matrix[0, 2].state == 1 && T.Matrix[1, 1].state == 1 && T.Matrix[2, 0].state == 1)
+            {
+                Ganar = true;
+                g.DrawLine(new Pen(Color.Red, 10), T.Matrix[0, 2].Coordinates.X, T.Matrix[0, 2].Coordinates.Y + 60, T.Matrix[2, 0].Coordinates.X + 60, T.Matrix[2, 0].Coordinates.Y);
+                for (int j = 0; j < 3; j++)
+                {
+                    for (int k = 0; k < 3; k++)
+                    {
+                        T.Matrix[j, k].state = 1;
+                    }
+                }
+            }
+            if (T.Matrix[0, 2].state == 2 && T.Matrix[1, 1].state == 2 && T.Matrix[2, 0].state == 2)
+            {
+                Ganar = true;
+                g.DrawLine(new Pen(Color.Red, 10), T.Matrix[0, 2].Coordinates.X, T.Matrix[0, 2].Coordinates.Y + 60, T.Matrix[2, 0].Coordinates.X + 60, T.Matrix[2, 0].Coordinates.Y);
+                for (int j = 0; j < 3; j++)
+                {
+                    for (int k = 0; k < 3; k++)
+                    {
+                        T.Matrix[j, k].state = 2;
+                    }
+                }
+            }
+
+            if (Ganar)
+                FinJuego();
+        }
+        public void FinJuego()
+        {
+            MessageBox.Show("Gana " + (turno==false?"Computadora":"Jugador"));
+        }
+
     }
 }
