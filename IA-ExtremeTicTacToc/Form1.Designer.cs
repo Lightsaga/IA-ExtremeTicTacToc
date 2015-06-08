@@ -38,7 +38,7 @@
             // 
             // pbCanvas
             // 
-            this.pbCanvas.Location = new System.Drawing.Point(102, 12);
+            this.pbCanvas.Location = new System.Drawing.Point(0, 0);
             this.pbCanvas.Name = "pbCanvas";
             this.pbCanvas.Size = new System.Drawing.Size(778, 705);
             this.pbCanvas.TabIndex = 0;
@@ -47,7 +47,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(12, 138);
+            this.button1.Location = new System.Drawing.Point(797, 95);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 1;
@@ -58,7 +58,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(25, 60);
+            this.label1.Location = new System.Drawing.Point(810, 17);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 2;
@@ -67,7 +67,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(11, 89);
+            this.label2.Location = new System.Drawing.Point(796, 46);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(0, 13);
             this.label2.TabIndex = 3;
@@ -75,7 +75,7 @@
             // cbxDificultad
             // 
             this.cbxDificultad.FormattingEnabled = true;
-            this.cbxDificultad.Location = new System.Drawing.Point(10, 174);
+            this.cbxDificultad.Location = new System.Drawing.Point(795, 131);
             this.cbxDificultad.Name = "cbxDificultad";
             this.cbxDificultad.Size = new System.Drawing.Size(84, 21);
             this.cbxDificultad.TabIndex = 4;

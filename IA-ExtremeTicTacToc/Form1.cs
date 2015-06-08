@@ -19,6 +19,8 @@ namespace IA_ExtremeTicTacToc
         int PerX = 0;
         int PerY = 0;
         Point tableroActual;
+        Point p;
+        
 
         public TictacForm()
         {
@@ -163,7 +165,7 @@ namespace IA_ExtremeTicTacToc
 
         public void MovimientoComputadora()
         {
-            Tablero T = Tableros[tableroActual.X, tableroActual.Y];
+            Tablero T = Tableros[PerX, PerY];
             Graphics g = pbCanvas.CreateGraphics();
 
             if (cbxDificultad.SelectedItem == "Facil")
@@ -325,7 +327,7 @@ namespace IA_ExtremeTicTacToc
             X = r.Next(0, 3);
             Y = r.Next(0, 3);
             Celda C = T.Matrix[X,Y];
-            DoMouseClick(C.Coordinates.X+10, C.Coordinates.Y+10);
+            DoMouseClick(C.Coordinates.X, C.Coordinates.Y);
         }
         public void DificultadNormal(Tablero T)
         {
@@ -356,22 +358,28 @@ namespace IA_ExtremeTicTacToc
             return new Tablero();
         }
 
-       [DllImport("user32.dll",CharSet=CharSet.Auto, CallingConvention=CallingConvention.StdCall)]
-       public static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint cButtons, uint dwExtraInfo);
+        [DllImport("user32.dll")]
+        public static extern void mouse_event
+            (MouseEventType dwFlags, int dx, int dy, int cButtons, int dwExtraInfo);
+        [DllImport("user32")]
+        public static extern int SetCursorPos(int x, int y);
 
-       private const uint MOUSEEVENTF_LEFTDOWN = 0x02;
-       private const uint MOUSEEVENTF_LEFTUP = 0x04;
-       private const uint MOUSEEVENTF_RIGHTDOWN = 0x08;
-       private const uint MOUSEEVENTF_RIGHTUP = 0x10;
+        public enum MouseEventType : int
+        {
+            LeftDown = 0x02,
+            LeftUp = 0x04,
+            RightDown = 0x08,
+            RightUp = 0x10
+        }
 
        public void DoMouseClick(int x, int y)
        {
-          //Call the imported function with the cursor's current position
-           int X = Convert.ToInt16(x);//set x position 
-           int Y = Convert.ToInt16(y);//set y position 
-           Cursor.Position = new Point(X, Y);
-           mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);//make left button down
-           mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);//make left button up
+           p.X = x;
+           p.Y = y;
+          /* Cursor.Position = this.pbCanvas.PointToClient(p);
+           mouse_event(MouseEventType.LeftDown, 0, 0, 0, 0);
+           mouse_event(MouseEventType.LeftUp, 0, 0, 0, 0);*/
+          
        }
 
     }
