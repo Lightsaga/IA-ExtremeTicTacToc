@@ -376,7 +376,11 @@ namespace IA_ExtremeTicTacToc
        {
            p.X = x;
            p.Y = y;
-          /* Cursor.Position = this.pbCanvas.PointToClient(p);
+
+           //Codigo de Carlos
+          // center = new Point((Cursor.Position.X) - (this.Location.X + panel1.Width + 8), (Cursor.Position.Y) - (this.Location.Y + 30))
+
+           /*Cursor.Position = new Point(center.X,center.Y);
            mouse_event(MouseEventType.LeftDown, 0, 0, 0, 0);
            mouse_event(MouseEventType.LeftUp, 0, 0, 0, 0);*/
           
