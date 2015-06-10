@@ -90,26 +90,31 @@ namespace IA_ExtremeTicTacToc
                         {
                             if ((e.X >= Tableros[i, j].Matrix[k, l].Coordinates.X && e.X < Tableros[i, j].Matrix[k, l].Coordinates.X + 60) && (e.Y >= Tableros[i, j].Matrix[k, l].Coordinates.Y && e.Y < Tableros[i, j].Matrix[k, l].Coordinates.Y + 60) && PrimerMov == false && Tableros[i, j].estado == 0)
                             {
-                                if (!turno)
-                                    g.DrawEllipse(new Pen(Color.Red, 10), Tableros[i, j].Matrix[k, l].Coordinates.X, Tableros[i, j].Matrix[k, l].Coordinates.Y, 60, 60);
-                                else
+                                if (Tableros[i, j].Matrix[k, l].state == 0 && Tableros[i, j].estado == 0)
                                 {
-                                    g.DrawLine(new Pen(Color.Red, 10), Tableros[i, j].Matrix[k, l].Coordinates.X, Tableros[i, j].Matrix[k, l].Coordinates.Y, Tableros[i, j].Matrix[k, l].Coordinates.X + 60, Tableros[i, j].Matrix[k, l].Coordinates.Y + 60);
-                                    g.DrawLine(new Pen(Color.Red, 10), Tableros[i, j].Matrix[k, l].Coordinates.X + 60, Tableros[i, j].Matrix[k, l].Coordinates.Y, Tableros[i, j].Matrix[k, l].Coordinates.X, Tableros[i, j].Matrix[k, l].Coordinates.Y + 60);
+                                    if (!turno)
+                                        g.DrawEllipse(new Pen(Color.Red, 10), Tableros[i, j].Matrix[k, l].Coordinates.X, Tableros[i, j].Matrix[k, l].Coordinates.Y, 60, 60);
+                                    else
+                                    {
+                                        g.DrawLine(new Pen(Color.Red, 10), Tableros[i, j].Matrix[k, l].Coordinates.X, Tableros[i, j].Matrix[k, l].Coordinates.Y, Tableros[i, j].Matrix[k, l].Coordinates.X + 60, Tableros[i, j].Matrix[k, l].Coordinates.Y + 60);
+                                        g.DrawLine(new Pen(Color.Red, 10), Tableros[i, j].Matrix[k, l].Coordinates.X + 60, Tableros[i, j].Matrix[k, l].Coordinates.Y, Tableros[i, j].Matrix[k, l].Coordinates.X, Tableros[i, j].Matrix[k, l].Coordinates.Y + 60);
+                                    }
+                                    turno = !turno ? true : false;
+                                    PrimerMov = true;
+                                    Tableros[i, j].Matrix[k, l].state = turno ? 1 : 2;
+                                    PerX = k;
+                                    PerY = l;
+                                    tableroActual.X = i;
+                                    tableroActual.Y = j;
+                                    RevisarEstadosTableroParcial();
+                                    if (Tableros[PerX, PerY].estado == 1 || Tableros[PerX, PerY].estado == 2 || Tableros[PerX, PerY].estado == 3)
+                                    {
+                                        PrimerMov = false;
+                                    }
+                                    label2.Text = !turno ? "Turno de Jugador 1" : "Turno de Jugador 2";
+                                    if (turno)
+                                        MovimientoComputadora();
                                 }
-                                turno = !turno ? true : false;
-                                PrimerMov = true;
-                                Tableros[i, j].Matrix[k, l].state =turno? 1:2;
-                                PerX = k;
-                                PerY = l;
-                                tableroActual.X = i;
-                                tableroActual.Y = j;
-                                RevisarEstadosTableroParcial();
-                                if (Tableros[PerX, PerY].estado == 1 || Tableros[PerX, PerY].estado == 2)
-                                {
-                                    PrimerMov = false;
-                                }
-                                label2.Text = !turno ? "Turno de Jugador 1" : "Turno de Jugador 2";
                             }
                             else if ((e.X >= Tableros[PerX, PerY].Matrix[k, l].Coordinates.X && e.X < Tableros[PerX, PerY].Matrix[k, l].Coordinates.X + 60) && (e.Y >= Tableros[PerX, PerY].Matrix[k, l].Coordinates.Y && e.Y < Tableros[PerX, PerY].Matrix[k, l].Coordinates.Y + 60) && PrimerMov == true)
                             {
@@ -131,11 +136,13 @@ namespace IA_ExtremeTicTacToc
                                     PerX = k;
                                     PerY = l;
                                     RevisarEstadosTableroParcial();
-                                    if (Tableros[PerX, PerY].estado == 1 || Tableros[PerX, PerY].estado == 2)
+                                    if (Tableros[PerX, PerY].estado == 1 || Tableros[PerX, PerY].estado == 2 || Tableros[PerX, PerY].estado == 3)
                                     {
                                         PrimerMov = false;
                                     }
                                     label2.Text = !turno ? "Turno de Jugador 1" : "Turno de Jugador 2";
+                                    if (turno)
+                                        MovimientoComputadora();
                                     return;
                                     
                                 }
@@ -159,8 +166,7 @@ namespace IA_ExtremeTicTacToc
                 }
             }
             RevisarEstadosTableroTotal();
-            if (turno)
-                MovimientoComputadora();
+
         }
 
         public void MovimientoComputadora()
@@ -183,18 +189,18 @@ namespace IA_ExtremeTicTacToc
             {
                 if (!PrimerMov)
                 {
-                    DificultadNormal(TableroAleatorio());
+                    DificultadNormal(TableroAleatorio(),1);
                 }
                 else
                 {
-                    DificultadNormal(T);
+                    DificultadNormal(T,1);
                 }
             }
             if (cbxDificultad.SelectedItem == "Dificil")
             {
                 if (!PrimerMov)
                 {
-                    DificultadDificil(TableroConveniente());
+                    DificultadDificil(TableroConveniente(1));
                 }
                 else
                 {
@@ -261,7 +267,21 @@ namespace IA_ExtremeTicTacToc
                 g.DrawLine(new Pen(Color.Black, 10), T.Matrix[0, 2].Coordinates.X, T.Matrix[0, 2].Coordinates.Y + 60, T.Matrix[2, 0].Coordinates.X + 60, T.Matrix[2, 0].Coordinates.Y);
                 T.estado = 2;
             }
-
+            int aux = 0;
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    if(T.Matrix[i,j].state==1||T.Matrix[i,j].state==2)
+                    {
+                        aux++;
+                    }
+                }
+            }
+            if(aux==9)
+            {
+                T.estado = 3;
+            }
         }
 
         public void RevisarEstadosTableroTotal()
@@ -314,48 +334,377 @@ namespace IA_ExtremeTicTacToc
             if (Ganar)
                 FinJuego();
         }
+        public Point RevisarSiguienteTurno(Tablero T,int i)
+        {
+            Point p = new Point(-1, -1);
+            //Tablero T = Tableros[tableroActual.X, tableroActual.Y];
 
+            if (i == 1)
+            {
+                //Ganar//
+                //Esquinas
+                if (T.Matrix[0, 0].state == 2 && T.Matrix[0, 2].state == 2 && T.Matrix[0, 1].state == 0)
+                    p = new Point(0, 1);
+                if (T.Matrix[0, 0].state == 2 && T.Matrix[2, 0].state == 2 && T.Matrix[1, 0].state == 0)
+                    p = new Point(1, 0);
+                if (T.Matrix[0, 0].state == 2 && T.Matrix[2, 2].state == 2 && T.Matrix[1, 1].state == 0)
+                    p = new Point(1, 1);
+
+                if (T.Matrix[2, 0].state == 2 && T.Matrix[2, 2].state == 2 && T.Matrix[2, 1].state == 0)
+                    p = new Point(2, 1);
+                if (T.Matrix[2, 0].state == 2 && T.Matrix[0, 2].state == 2 && T.Matrix[1, 1].state == 0)
+                    p = new Point(1, 1);
+
+                if (T.Matrix[2, 2].state == 2 && T.Matrix[0, 2].state == 2 && T.Matrix[1, 2].state == 0)
+                    p = new Point(1, 2);
+
+                //Medios
+                if (T.Matrix[1, 0].state == 2 && T.Matrix[1, 2].state == 2 && T.Matrix[1, 1].state == 0)
+                    p = new Point(1, 1);
+                if (T.Matrix[0, 1].state == 2 && T.Matrix[2, 1].state == 2 && T.Matrix[1, 1].state == 0)
+                    p = new Point(1, 1);
+
+                if (T.Matrix[1, 0].state == 2 && T.Matrix[0, 0].state == 2 && T.Matrix[2, 0].state == 0)
+                    p = new Point(2, 0);
+                if (T.Matrix[1, 0].state == 2 && T.Matrix[2, 0].state == 2 && T.Matrix[0, 0].state == 0)
+                    p = new Point(0, 0);
+
+                if (T.Matrix[0, 1].state == 2 && T.Matrix[0, 0].state == 2 && T.Matrix[0, 2].state == 0)
+                    p = new Point(0, 2);
+                if (T.Matrix[0, 1].state == 2 && T.Matrix[0, 2].state == 2 && T.Matrix[0, 0].state == 0)
+                    p = new Point(0, 0);
+                if (T.Matrix[0, 1].state == 2 && T.Matrix[1, 1].state == 2 && T.Matrix[2, 1].state == 0)
+                    p = new Point(2, 1);
+
+                if (T.Matrix[1, 2].state == 2 && T.Matrix[0, 2].state == 2 && T.Matrix[2, 2].state == 0)
+                    p = new Point(2, 2);
+                if (T.Matrix[1, 2].state == 2 && T.Matrix[2, 2].state == 2 && T.Matrix[0, 2].state == 0)
+                    p = new Point(0, 2);
+
+                if (T.Matrix[2, 1].state == 2 && T.Matrix[2, 0].state == 2 && T.Matrix[2, 2].state == 0)
+                    p = new Point(2, 2);
+                if (T.Matrix[2, 1].state == 2 && T.Matrix[2, 2].state == 2 && T.Matrix[2, 0].state == 0)
+                    p = new Point(2, 0);
+                if (T.Matrix[2, 1].state == 2 && T.Matrix[1, 1].state == 2 && T.Matrix[0, 1].state == 0)
+                    p = new Point(0, 1);
+
+                //Centro
+                if (T.Matrix[0, 0].state == 2 && T.Matrix[1, 1].state == 2 && T.Matrix[2, 2].state == 0)
+                    p = new Point(2, 2);
+                if (T.Matrix[0, 1].state == 2 && T.Matrix[1, 1].state == 2 && T.Matrix[2, 1].state == 0)
+                    p = new Point(2, 1);
+                if (T.Matrix[0, 2].state == 2 && T.Matrix[1, 1].state == 2 && T.Matrix[2, 0].state == 0)
+                    p = new Point(2, 0);
+                if (T.Matrix[1, 0].state == 2 && T.Matrix[1, 1].state == 2 && T.Matrix[1, 2].state == 0)
+                    p = new Point(1, 2);
+                if (T.Matrix[1, 2].state == 2 && T.Matrix[1, 1].state == 2 && T.Matrix[1, 0].state == 0)
+                    p = new Point(1, 0);
+                if (T.Matrix[2, 0].state == 2 && T.Matrix[1, 1].state == 2 && T.Matrix[0, 2].state == 0)
+                    p = new Point(0, 2);
+                if (T.Matrix[2, 1].state == 2 && T.Matrix[1, 1].state == 2 && T.Matrix[0, 1].state == 0)
+                    p = new Point(0, 1);
+                if (T.Matrix[2, 2].state == 2 && T.Matrix[1, 1].state == 2 && T.Matrix[0, 0].state == 0)
+                    p = new Point(0, 0);
+            }
+            else
+            {
+                //Bloqueos//
+                //Esquinas
+                if (T.Matrix[0, 0].state == 1 && T.Matrix[0, 2].state == 1 && T.Matrix[0, 1].state == 0)
+                    p = new Point(0, 1);
+                if (T.Matrix[0, 0].state == 1 && T.Matrix[2, 0].state == 1 && T.Matrix[1, 0].state == 0)
+                    p = new Point(1, 0);
+                if (T.Matrix[0, 0].state == 1 && T.Matrix[2, 2].state == 1 && T.Matrix[1, 1].state == 0)
+                    p = new Point(1, 1);
+
+                if (T.Matrix[2, 0].state == 1 && T.Matrix[2, 2].state == 1 && T.Matrix[2, 1].state == 0)
+                    p = new Point(2, 1);
+                if (T.Matrix[2, 0].state == 1 && T.Matrix[0, 2].state == 1 && T.Matrix[1, 1].state == 0)
+                    p = new Point(1, 1);
+
+                if (T.Matrix[2, 2].state == 1 && T.Matrix[0, 2].state == 1 && T.Matrix[1, 2].state == 0)
+                    p = new Point(1, 2);
+
+                //Medios
+                if (T.Matrix[1, 0].state == 1 && T.Matrix[1, 2].state == 1 && T.Matrix[1, 1].state == 0)
+                    p = new Point(1, 1);
+                if (T.Matrix[0, 1].state == 1 && T.Matrix[2, 1].state == 1 && T.Matrix[1, 1].state == 0)
+                    p = new Point(1, 1);
+
+                if (T.Matrix[1, 0].state == 1 && T.Matrix[0, 0].state == 1 && T.Matrix[2, 0].state == 0)
+                    p = new Point(2, 0);
+                if (T.Matrix[1, 0].state == 1 && T.Matrix[2, 0].state == 1 && T.Matrix[0, 0].state == 0)
+                    p = new Point(0, 0);
+
+                if (T.Matrix[0, 1].state == 1 && T.Matrix[0, 0].state == 1 && T.Matrix[0, 2].state == 0)
+                    p = new Point(0, 2);
+                if (T.Matrix[0, 1].state == 1 && T.Matrix[0, 2].state == 1 && T.Matrix[0, 0].state == 0)
+                    p = new Point(0, 0);
+                if (T.Matrix[0, 1].state == 1 && T.Matrix[1, 1].state == 1 && T.Matrix[2, 1].state == 0)
+                    p = new Point(2, 1);
+
+                if (T.Matrix[1, 2].state == 1 && T.Matrix[0, 2].state == 1 && T.Matrix[2, 2].state == 0)
+                    p = new Point(2, 2);
+                if (T.Matrix[1, 2].state == 1 && T.Matrix[2, 2].state == 1 && T.Matrix[0, 2].state == 0)
+                    p = new Point(0, 2);
+
+                if (T.Matrix[2, 1].state == 1 && T.Matrix[2, 0].state == 1 && T.Matrix[2, 2].state == 0)
+                    p = new Point(2, 2);
+                if (T.Matrix[2, 1].state == 1 && T.Matrix[2, 2].state == 1 && T.Matrix[2, 0].state == 0)
+                    p = new Point(2, 0);
+                if (T.Matrix[2, 1].state == 1 && T.Matrix[1, 1].state == 1 && T.Matrix[0, 1].state == 0)
+                    p = new Point(0, 1);
+
+                //Centro
+                if (T.Matrix[0, 0].state == 1 && T.Matrix[1, 1].state == 1 && T.Matrix[2, 2].state == 0)
+                    p = new Point(2, 2);
+                if (T.Matrix[0, 1].state == 1 && T.Matrix[1, 1].state == 1 && T.Matrix[2, 1].state == 0)
+                    p = new Point(2, 1);
+                if (T.Matrix[0, 2].state == 1 && T.Matrix[1, 1].state == 1 && T.Matrix[2, 0].state == 0)
+                    p = new Point(2, 0);
+                if (T.Matrix[1, 0].state == 1 && T.Matrix[1, 1].state == 1 && T.Matrix[1, 2].state == 0)
+                    p = new Point(1, 2);
+                if (T.Matrix[1, 2].state == 1 && T.Matrix[1, 1].state == 1 && T.Matrix[1, 0].state == 0)
+                    p = new Point(1, 0);
+                if (T.Matrix[2, 0].state == 1 && T.Matrix[1, 1].state == 1 && T.Matrix[0, 2].state == 0)
+                    p = new Point(0, 2);
+                if (T.Matrix[2, 1].state == 1 && T.Matrix[1, 1].state == 1 && T.Matrix[0, 1].state == 0)
+                    p = new Point(0, 1);
+                if (T.Matrix[2, 2].state == 1 && T.Matrix[1, 1].state == 1 && T.Matrix[0, 0].state == 0)
+                    p = new Point(0, 0);
+
+            }
+            return p;
+        }
         public void FinJuego()
         {
             MessageBox.Show("Gana " + (turno==false?"Computadora":"Jugador"));
         }
-
         public void DificultadFacil(Tablero T)
         {
-            Random r = new Random();
+            
             int X, Y;
             X = r.Next(0, 3);
             Y = r.Next(0, 3);
             Celda C = T.Matrix[X,Y];
-            DoMouseClick(C.Coordinates.X, C.Coordinates.Y);
+            if (C.state == 1 || C.state == 2)
+                DificultadFacil(T);
+            DoMouseClick(C.Coordinates.X+50, C.Coordinates.Y+50);
         }
-        public void DificultadNormal(Tablero T)
+        public void DificultadNormal(Tablero T, int i)
         {
+            Point p = RevisarSiguienteTurno(T,i);
+            if (p.X != -1 && p.Y != -1)
+            {
+                if (T.Matrix[p.X, p.Y].state == 0)
+                    DoMouseClick(T.Matrix[p.X, p.Y].Coordinates.X + 50, T.Matrix[p.X, p.Y].Coordinates.Y + 50);
+                else if (i == 1)
+                    DificultadNormal(T, i + 1);
 
+                else
+                    DificultadFacil(T);
+            }
+            else
+            {
+                if (i == 1)
+                    DificultadNormal(T, i + 1);
+                else
+                    DificultadFacil(T);
+            }
         }
         public void DificultadDificil(Tablero T)
         {
+            //Si es turno fijo...
+            //En base al TableroConvenienteFuturo
+
+            //Si es turno libre...
+            //En base al TableroConveniente
+
 
         }
-
+        Random r = new Random();
         public Tablero TableroAleatorio()
         {
-            Random r = new Random();
             int X, Y;
-            X = r.Next(0, 3);
-            Y = r.Next(0, 3);
-            return Tableros[X, Y];
+            while (true)
+            {
+                X = r.Next(0, 3);
+                Y = r.Next(0, 3);
+                if (Tableros[X, Y].estado == 0)
+                    break;
+                
+            }
+            
+            
+            /*if (Tableros[X, Y].estado == 1 || Tableros[X, Y].estado == 2)
+                TableroAleatorio();*/
+
+           return Tableros[X, Y];
+            
         }
 
         //Dificil
-        public Tablero TableroConveniente()
+        public Tablero TableroConveniente(int i)
         {
-            return new Tablero();
+            Point p = new Point(-1, -1);
+            //Tablero T = Tableros[tableroActual.X, tableroActual.Y];
+
+            if (i == 1)
+            {
+                //Ganar//
+                //Esquinas
+                if (Tableros[0, 0].estado == 2 && Tableros[0, 2].estado == 2 && Tableros[0, 1].estado == 0)
+                    p = new Point(0, 1);
+                if (Tableros[0, 0].estado == 2 && Tableros[2, 0].estado == 2 && Tableros[1, 0].estado == 0)
+                    p = new Point(1, 0);
+                if (Tableros[0, 0].estado == 2 && Tableros[2, 2].estado == 2 && Tableros[1, 1].estado == 0)
+                    p = new Point(1, 1);
+
+                if (Tableros[2, 0].estado == 2 && Tableros[2, 2].estado == 2 && Tableros[2, 1].estado == 0)
+                    p = new Point(2, 1);
+                if (Tableros[2, 0].estado == 2 && Tableros[0, 2].estado == 2 && Tableros[1, 1].estado == 0)
+                    p = new Point(1, 1);
+
+                if (Tableros[2, 2].estado == 2 && Tableros[0, 2].estado == 2 && Tableros[1, 2].estado == 0)
+                    p = new Point(1, 2);
+
+                //Medios
+                if (Tableros[1, 0].estado == 2 && Tableros[1, 2].estado == 2 && Tableros[1, 1].estado == 0)
+                    p = new Point(1, 1);
+                if (Tableros[0, 1].estado == 2 && Tableros[2, 1].estado == 2 && Tableros[1, 1].estado == 0)
+                    p = new Point(1, 1);
+
+                if (Tableros[1, 0].estado == 2 && Tableros[0, 0].estado == 2 && Tableros[2, 0].estado == 0)
+                    p = new Point(2, 0);
+                if (Tableros[1, 0].estado == 2 && Tableros[2, 0].estado == 2 && Tableros[0, 0].estado == 0)
+                    p = new Point(0, 0);
+
+                if (Tableros[0, 1].estado == 2 && Tableros[0, 0].estado == 2 && Tableros[0, 2].estado == 0)
+                    p = new Point(0, 2);
+                if (Tableros[0, 1].estado == 2 && Tableros[0, 2].estado == 2 && Tableros[0, 0].estado == 0)
+                    p = new Point(0, 0);
+                if (Tableros[0, 1].estado == 2 && Tableros[1, 1].estado == 2 && Tableros[2, 1].estado == 0)
+                    p = new Point(2, 1);
+
+                if (Tableros[1, 2].estado == 2 && Tableros[0, 2].estado == 2 && Tableros[2, 2].estado == 0)
+                    p = new Point(2, 2);
+                if (Tableros[1, 2].estado == 2 && Tableros[2, 2].estado == 2 && Tableros[0, 2].estado == 0)
+                    p = new Point(0, 2);
+
+                if (Tableros[2, 1].estado == 2 && Tableros[2, 0].estado == 2 && Tableros[2, 2].estado == 0)
+                    p = new Point(2, 2);
+                if (Tableros[2, 1].estado == 2 && Tableros[2, 2].estado == 2 && Tableros[2, 0].estado == 0)
+                    p = new Point(2, 0);
+                if (Tableros[2, 1].estado == 2 && Tableros[1, 1].estado == 2 && Tableros[0, 1].estado == 0)
+                    p = new Point(0, 1);
+
+                //Centro
+                if (Tableros[0, 0].estado == 2 && Tableros[1, 1].estado == 2 && Tableros[2, 2].estado == 0)
+                    p = new Point(2, 2);
+                if (Tableros[0, 1].estado == 2 && Tableros[1, 1].estado == 2 && Tableros[2, 1].estado == 0)
+                    p = new Point(2, 1);
+                if (Tableros[0, 2].estado == 2 && Tableros[1, 1].estado == 2 && Tableros[2, 0].estado == 0)
+                    p = new Point(2, 0);
+                if (Tableros[1, 0].estado == 2 && Tableros[1, 1].estado == 2 && Tableros[1, 2].estado == 0)
+                    p = new Point(1, 2);
+                if (Tableros[1, 2].estado == 2 && Tableros[1, 1].estado == 2 && Tableros[1, 0].estado == 0)
+                    p = new Point(1, 0);
+                if (Tableros[2, 0].estado == 2 && Tableros[1, 1].estado == 2 && Tableros[0, 2].estado == 0)
+                    p = new Point(0, 2);
+                if (Tableros[2, 1].estado == 2 && Tableros[1, 1].estado == 2 && Tableros[0, 1].estado == 0)
+                    p = new Point(0, 1);
+                if (Tableros[2, 2].estado == 2 && Tableros[1, 1].estado == 2 && Tableros[0, 0].estado == 0)
+                    p = new Point(0, 0);
+            }
+            else
+            {
+                //Bloqueos//
+                //Esquinas
+                if (Tableros[0, 0].estado == 1 && Tableros[0, 2].estado == 1 && Tableros[0, 1].estado == 0)
+                    p = new Point(0, 1);
+                if (Tableros[0, 0].estado == 1 && Tableros[2, 0].estado == 1 && Tableros[1, 0].estado == 0)
+                    p = new Point(1, 0);
+                if (Tableros[0, 0].estado == 1 && Tableros[2, 2].estado == 1 && Tableros[1, 1].estado == 0)
+                    p = new Point(1, 1);
+
+                if (Tableros[2, 0].estado == 1 && Tableros[2, 2].estado == 1 && Tableros[2, 1].estado == 0)
+                    p = new Point(2, 1);
+                if (Tableros[2, 0].estado == 1 && Tableros[0, 2].estado == 1 && Tableros[1, 1].estado == 0)
+                    p = new Point(1, 1);
+
+                if (Tableros[2, 2].estado == 1 && Tableros[0, 2].estado == 1 && Tableros[1, 2].estado == 0)
+                    p = new Point(1, 2);
+
+                //Medios
+                if (Tableros[1, 0].estado == 1 && Tableros[1, 2].estado == 1 && Tableros[1, 1].estado == 0)
+                    p = new Point(1, 1);
+                if (Tableros[0, 1].estado == 1 && Tableros[2, 1].estado == 1 && Tableros[1, 1].estado == 0)
+                    p = new Point(1, 1);
+
+                if (Tableros[1, 0].estado == 1 && Tableros[0, 0].estado == 1 && Tableros[2, 0].estado == 0)
+                    p = new Point(2, 0);
+                if (Tableros[1, 0].estado == 1 && Tableros[2, 0].estado == 1 && Tableros[0, 0].estado == 0)
+                    p = new Point(0, 0);
+
+                if (Tableros[0, 1].estado == 1 && Tableros[0, 0].estado == 1 && Tableros[0, 2].estado == 0)
+                    p = new Point(0, 2);
+                if (Tableros[0, 1].estado == 1 && Tableros[0, 2].estado == 1 && Tableros[0, 0].estado == 0)
+                    p = new Point(0, 0);
+                if (Tableros[0, 1].estado == 1 && Tableros[1, 1].estado == 1 && Tableros[2, 1].estado == 0)
+                    p = new Point(2, 1);
+
+                if (Tableros[1, 2].estado == 1 && Tableros[0, 2].estado == 1 && Tableros[2, 2].estado == 0)
+                    p = new Point(2, 2);
+                if (Tableros[1, 2].estado == 1 && Tableros[2, 2].estado == 1 && Tableros[0, 2].estado == 0)
+                    p = new Point(0, 2);
+
+                if (Tableros[2, 1].estado == 1 && Tableros[2, 0].estado == 1 && Tableros[2, 2].estado == 0)
+                    p = new Point(2, 2);
+                if (Tableros[2, 1].estado == 1 && Tableros[2, 2].estado == 1 && Tableros[2, 0].estado == 0)
+                    p = new Point(2, 0);
+                if (Tableros[2, 1].estado == 1 && Tableros[1, 1].estado == 1 && Tableros[0, 1].estado == 0)
+                    p = new Point(0, 1);
+
+                //Centro
+                if (Tableros[0, 0].estado == 1 && Tableros[1, 1].estado == 1 && Tableros[2, 2].estado == 0)
+                    p = new Point(2, 2);
+                if (Tableros[0, 1].estado == 1 && Tableros[1, 1].estado == 1 && Tableros[2, 1].estado == 0)
+                    p = new Point(2, 1);
+                if (Tableros[0, 2].estado == 1 && Tableros[1, 1].estado == 1 && Tableros[2, 0].estado == 0)
+                    p = new Point(2, 0);
+                if (Tableros[1, 0].estado == 1 && Tableros[1, 1].estado == 1 && Tableros[1, 2].estado == 0)
+                    p = new Point(1, 2);
+                if (Tableros[1, 2].estado == 1 && Tableros[1, 1].estado == 1 && Tableros[1, 0].estado == 0)
+                    p = new Point(1, 0);
+                if (Tableros[2, 0].estado == 1 && Tableros[1, 1].estado == 1 && Tableros[0, 2].estado == 0)
+                    p = new Point(0, 2);
+                if (Tableros[2, 1].estado == 1 && Tableros[1, 1].estado == 1 && Tableros[0, 1].estado == 0)
+                    p = new Point(0, 1);
+                if (Tableros[2, 2].estado == 1 && Tableros[1, 1].estado == 1 && Tableros[0, 0].estado == 0)
+                    p = new Point(0, 0);
+
+            }
+            if (p.X == -1 && p.Y == -1)
+                return TableroAleatorio();
+            else
+                return Tableros[p.X,p.Y];
         }
 
-        public Tablero TableroConvenienteFuturo()
+        public Tablero TableroConvenienteFuturo(Tablero T)
         {
-            return new Tablero();
+            Point p;
+            List<Tablero> ListaConveniente = new List<Tablero>();
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    p = RevisarSiguienteTurno(Tableros[i,j],2);
+                    if (p.X == -1 && p.Y == -1)
+                        ListaConveniente.Add(Tableros[i, j]);
+                }
+            }
+            int hey = r.Next(0,ListaConveniente.Count);
+            return ListaConveniente[hey];
         }
 
         [DllImport("user32.dll")]
@@ -374,15 +723,13 @@ namespace IA_ExtremeTicTacToc
 
        public void DoMouseClick(int x, int y)
        {
-           p.X = x;
-           p.Y = y;
-
+           Cursor.Position = new Point(0, 0);
            //Codigo de Carlos
-          // center = new Point((Cursor.Position.X) - (this.Location.X + panel1.Width + 8), (Cursor.Position.Y) - (this.Location.Y + 30))
+           p = new Point((this.Location.X + pbCanvas.Location.X+x),(this.Location.Y + pbCanvas.Location.Y+y));
 
-           /*Cursor.Position = new Point(center.X,center.Y);
+           Cursor.Position = new Point(p.X,p.Y);
            mouse_event(MouseEventType.LeftDown, 0, 0, 0, 0);
-           mouse_event(MouseEventType.LeftUp, 0, 0, 0, 0);*/
+           mouse_event(MouseEventType.LeftUp, 0, 0, 0, 0);
           
        }
 
