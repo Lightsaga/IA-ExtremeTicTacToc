@@ -293,7 +293,46 @@ namespace IA_ExtremeTicTacToc
                     {
                         aux++;
                     }
-                    /*if (Tableros[i, j].estado == 2)
+                    if (Tableros[i, j].estado == 1)
+                    {
+                        if (i == 0 && j == 0)
+                        {
+                            g1.DrawEllipse(new Pen(Color.Red, 10), 0, 0, 60, 60);
+                        }
+                        if (i == 0 && j == 1)
+                        {
+                            g1.DrawEllipse(new Pen(Color.Red, 10), 0, 60, 60, 60);
+                        }
+                        if (i == 0 && j == 2)
+                        {
+                            g1.DrawEllipse(new Pen(Color.Red, 10), 0, 120, 60, 60);
+                        }
+                        if (i == 1 && j == 0)
+                        {
+                            g1.DrawEllipse(new Pen(Color.Red, 10), 60, 0, 60, 60);
+                        }
+                        if (i == 1 && j == 1)
+                        {
+                            g1.DrawEllipse(new Pen(Color.Red, 10), 60, 60, 60, 60);
+                        }
+                        if (i == 1 && j ==2)
+                        {
+                            g1.DrawEllipse(new Pen(Color.Red, 10), 60, 120, 60, 60);
+                        }
+                        if (i == 2 && j == 0)
+                        {
+                            g1.DrawEllipse(new Pen(Color.Red, 10), 120, 0, 60, 60);
+                        }
+                        if (i == 2 && j == 1)
+                        {
+                            g1.DrawEllipse(new Pen(Color.Red, 10), 120, 60, 60, 60);
+                        }
+                        if (i == 2 && j == 2)
+                        {
+                            g1.DrawEllipse(new Pen(Color.Red, 10), 120, 120, 60, 60);
+                        }
+                    }
+                    if (Tableros[i, j].estado == 2)
                     {
                         if (i == 0 && j == 0)
                         {
@@ -312,34 +351,35 @@ namespace IA_ExtremeTicTacToc
                         }
                         if (i == 1 && j == 0)
                         {
-                            g1.DrawLine(new Pen(Color.Blue, 10), 0, 0, 60, 60);
-                            g1.DrawLine(new Pen(Color.Blue, 10), 0, 60, 60, 0);
+                            g1.DrawLine(new Pen(Color.Blue, 10), 60, 0, 120, 60);
+                            g1.DrawLine(new Pen(Color.Blue, 10), 60, 60, 120, 0);
                         }
                         if (i == 1 && j == 1)
                         {
-                            g1.DrawLine(new Pen(Color.Blue, 10), 0, 60, 60, 120);
-                            g1.DrawLine(new Pen(Color.Blue, 10), 0, 120, 60, 60);
+                            g1.DrawLine(new Pen(Color.Blue, 10), 60, 60, 120, 120);
+                            g1.DrawLine(new Pen(Color.Blue, 10), 60, 120, 120, 60);
                         }
-                        if (i == 1 && j ==2)
+                        if (i == 1 && j == 2)
                         {
-                            g1.DrawLine(new Pen(Color.Blue, 10), 0, 120, 60, 180);
-                            g1.DrawLine(new Pen(Color.Blue, 10), 0, 180, 60, 120);
+                            g1.DrawLine(new Pen(Color.Blue, 10), 60, 120, 120, 180);
+                            g1.DrawLine(new Pen(Color.Blue, 10), 60, 180, 120, 60);
                         }
                         if (i == 2 && j == 0)
                         {
-                            g1.DrawLine(new Pen(Color.Blue, 10), 0, 0, 60, 60);
-                            g1.DrawLine(new Pen(Color.Blue, 10), 0, 60, 60, 0);
+                            g1.DrawLine(new Pen(Color.Blue, 10), 120, 0, 180, 60);
+                            g1.DrawLine(new Pen(Color.Blue, 10), 120, 60, 180, 0);
                         }
                         if (i == 2 && j == 1)
                         {
-                            g1.DrawLine(new Pen(Color.Blue, 10), 0, 0, 60, 60);
-                            g1.DrawLine(new Pen(Color.Blue, 10), 0, 60, 60, 0);
+                            g1.DrawLine(new Pen(Color.Blue, 10), 120, 60, 180, 120);
+                            g1.DrawLine(new Pen(Color.Blue, 10), 120, 120, 180, 60);
                         }
                         if (i == 2 && j == 2)
                         {
-
+                            g1.DrawLine(new Pen(Color.Blue, 10), 120, 120, 180, 180);
+                            g1.DrawLine(new Pen(Color.Blue, 10), 120, 180, 180, 120);
                         }
-                    }*/
+                    }
                 }
             }
             if(aux==9)
