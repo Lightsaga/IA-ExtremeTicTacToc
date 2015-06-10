@@ -15,3 +15,12 @@ C:\Users\Oscar\Documents\GitHub\IA-ExtremeTicTacToc\IA-ExtremeTicTacToc\obj\Debu
 C:\Users\Oscar\Documents\GitHub\IA-ExtremeTicTacToc\IA-ExtremeTicTacToc\obj\Debug\IA_ExtremeTicTacToc.TictacForm.resources
 C:\Users\Oscar\Documents\GitHub\IA-ExtremeTicTacToc\IA-ExtremeTicTacToc\obj\Debug\IA_ExtremeTicTacToc.Properties.Resources.resources
 C:\Users\Oscar\Documents\GitHub\IA-ExtremeTicTacToc\IA-ExtremeTicTacToc\obj\Debug\IA-ExtremeTicTacToc.csproj.GenerateResource.Cache
+C:\Users\Vizardespa\Documents\GitHub\IA-ExtremeTicTacToc\IA-ExtremeTicTacToc\bin\Debug\IA-ExtremeTicTacToc.exe.config
+C:\Users\Vizardespa\Documents\GitHub\IA-ExtremeTicTacToc\IA-ExtremeTicTacToc\obj\Debug\IA-ExtremeTicTacToc.exe
+C:\Users\Vizardespa\Documents\GitHub\IA-ExtremeTicTacToc\IA-ExtremeTicTacToc\obj\Debug\IA-ExtremeTicTacToc.pdb
+C:\Users\Vizardespa\Documents\GitHub\IA-ExtremeTicTacToc\IA-ExtremeTicTacToc\bin\Debug\IA-ExtremeTicTacToc.exe
+C:\Users\Vizardespa\Documents\GitHub\IA-ExtremeTicTacToc\IA-ExtremeTicTacToc\bin\Debug\IA-ExtremeTicTacToc.pdb
+C:\Users\Vizardespa\Documents\GitHub\IA-ExtremeTicTacToc\IA-ExtremeTicTacToc\obj\Debug\IA-ExtremeTicTacToc.csprojResolveAssemblyReference.cache
+C:\Users\Vizardespa\Documents\GitHub\IA-ExtremeTicTacToc\IA-ExtremeTicTacToc\obj\Debug\IA_ExtremeTicTacToc.TictacForm.resources
+C:\Users\Vizardespa\Documents\GitHub\IA-ExtremeTicTacToc\IA-ExtremeTicTacToc\obj\Debug\IA_ExtremeTicTacToc.Properties.Resources.resources
+C:\Users\Vizardespa\Documents\GitHub\IA-ExtremeTicTacToc\IA-ExtremeTicTacToc\obj\Debug\IA-ExtremeTicTacToc.csproj.GenerateResource.Cache

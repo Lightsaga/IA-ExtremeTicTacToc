@@ -544,9 +544,9 @@ namespace IA_ExtremeTicTacToc
         {
             MessageBox.Show("Gana " + (turno==false?"Computadora":"Jugador"));
         }
+
         public void DificultadFacil(Tablero T)
-        {
-            
+        {  
             int X, Y;
             X = r.Next(0, 3);
             Y = r.Next(0, 3);
@@ -578,14 +578,20 @@ namespace IA_ExtremeTicTacToc
         }
         public void DificultadDificil(Tablero T)
         {
-            //Si es turno fijo...
-            //En base al TableroConvenienteFuturo
-
-            //Si es turno libre...
-            //En base al TableroConveniente
-
-
+            Tablero aux = T;
+            if(!PrimerMov)
+            {
+                //Si es turno libre...
+                //En base al TableroConveniente
+                aux = TableroConvenienteFinal();
+            }
+            Point P = TableroConvenienteFuturo(aux);
+                if (P.X == -2 && P.Y == -2)
+                    DificultadNormal(aux, 1);
+                else
+                    DoMouseClick(aux.Matrix[P.X, P.Y].Coordinates.X + 50, aux.Matrix[P.X, P.Y].Coordinates.Y + 50);
         }
+
         Random r = new Random();
         public Tablero TableroAleatorio()
         {
@@ -754,21 +760,49 @@ namespace IA_ExtremeTicTacToc
                 return Tableros[p.X,p.Y];
         }
 
-        public Tablero TableroConvenienteFuturo(Tablero T)
+        public Tablero TableroConvenienteFinal()
         {
-            Point p;
             List<Tablero> ListaConveniente = new List<Tablero>();
-            for (int i = 0; i < 3; i++)
-            {
-                for (int j = 0; j < 3; j++)
+            Point p;
+            Tablero aux = TableroAleatorio();
+                for (int i = 0; i < 3; i++)
                 {
-                    p = RevisarSiguienteTurno(Tableros[i,j],2);
-                    if (p.X == -1 && p.Y == -1)
-                        ListaConveniente.Add(Tableros[i, j]);
+                    for (int j = 0; j < 3; j++)
+                    {
+                        p = RevisarSiguienteTurno(Tableros[i, j], 1);
+                        if (p.X != -1 && p.Y != -1 && (Tableros[i, j].estado == 0))
+                            ListaConveniente.Add(Tableros[i, j]);
+                    }
                 }
+                if (ListaConveniente.Count != 0)
+                    aux = ListaConveniente[r.Next(0, ListaConveniente.Count)];
+                return aux;
+        }
+
+        public Point TableroConvenienteFuturo(Tablero T)
+        {
+            List<Point> ListaConveniente = new List<Point>();
+            Point p;
+            p = RevisarSiguienteTurno(T, 1);
+            /*if (p.X == -1 && p.Y == -1)
+                p = RevisarSiguienteTurno(T, 2);*/
+            if (p.X == -1 && p.Y == -1)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    for (int j = 0; j < 3; j++)
+                    {
+                        p = RevisarSiguienteTurno(Tableros[i, j], 2);
+                        if (p.X == -1 && p.Y == -1 && (T.Matrix[i, j].state == 0))
+                            ListaConveniente.Add(new Point(i, j));
+                    }
+                }
+                if (ListaConveniente.Count != 0)
+                    p = ListaConveniente[r.Next(0, ListaConveniente.Count)];
+                else
+                    p = new Point(-2, -2);
             }
-            int hey = r.Next(0,ListaConveniente.Count);
-            return ListaConveniente[hey];
+            return p;
         }
 
         [DllImport("user32.dll")]
