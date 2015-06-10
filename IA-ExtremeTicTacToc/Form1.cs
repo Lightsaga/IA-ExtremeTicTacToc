@@ -72,7 +72,21 @@ namespace IA_ExtremeTicTacToc
                 espacioX += 10;
                 espacioY = 0;
             }
-            //Tableros[0,0].DibujarTablero(pbCanvas, new Point(10,10));
+            Graphics g = pictureBox1.CreateGraphics();
+            Rectangle rect;
+            int posX = 0, posY = 0;
+            for (int i = 0; i < 3; i++)
+            {
+                posY = 0;
+                for (int j = 0; j < 3; j++)
+                {
+                    rect = new Rectangle(posX, posY, 60, 60);
+                    g.DrawRectangle(new Pen(Color.Black,3),rect);
+                    posY += 60;
+                }
+                posX += 60;
+            }
+            
 
         }
 
@@ -96,14 +110,15 @@ namespace IA_ExtremeTicTacToc
                                         g.DrawEllipse(new Pen(Color.Red, 10), Tableros[i, j].Matrix[k, l].Coordinates.X, Tableros[i, j].Matrix[k, l].Coordinates.Y, 60, 60);
                                     else
                                     {
-                                        g.DrawLine(new Pen(Color.Red, 10), Tableros[i, j].Matrix[k, l].Coordinates.X, Tableros[i, j].Matrix[k, l].Coordinates.Y, Tableros[i, j].Matrix[k, l].Coordinates.X + 60, Tableros[i, j].Matrix[k, l].Coordinates.Y + 60);
-                                        g.DrawLine(new Pen(Color.Red, 10), Tableros[i, j].Matrix[k, l].Coordinates.X + 60, Tableros[i, j].Matrix[k, l].Coordinates.Y, Tableros[i, j].Matrix[k, l].Coordinates.X, Tableros[i, j].Matrix[k, l].Coordinates.Y + 60);
+                                        g.DrawLine(new Pen(Color.Blue, 10), Tableros[i, j].Matrix[k, l].Coordinates.X, Tableros[i, j].Matrix[k, l].Coordinates.Y, Tableros[i, j].Matrix[k, l].Coordinates.X + 60, Tableros[i, j].Matrix[k, l].Coordinates.Y + 60);
+                                        g.DrawLine(new Pen(Color.Blue, 10), Tableros[i, j].Matrix[k, l].Coordinates.X + 60, Tableros[i, j].Matrix[k, l].Coordinates.Y, Tableros[i, j].Matrix[k, l].Coordinates.X, Tableros[i, j].Matrix[k, l].Coordinates.Y + 60);
                                     }
                                     turno = !turno ? true : false;
                                     PrimerMov = true;
                                     Tableros[i, j].Matrix[k, l].state = turno ? 1 : 2;
                                     PerX = k;
                                     PerY = l;
+                                    label4.Text = PerX + "," + PerY;
                                     tableroActual.X = i;
                                     tableroActual.Y = j;
                                     RevisarEstadosTableroParcial();
@@ -125,8 +140,8 @@ namespace IA_ExtremeTicTacToc
                                         g.DrawEllipse(new Pen(Color.Red, 10), Tableros[PerX, PerY].Matrix[k, l].Coordinates.X, Tableros[PerX, PerY].Matrix[k, l].Coordinates.Y, 60, 60);
                                     else
                                     {
-                                        g.DrawLine(new Pen(Color.Red, 10), Tableros[PerX, PerY].Matrix[k, l].Coordinates.X, Tableros[PerX, PerY].Matrix[k, l].Coordinates.Y, Tableros[PerX, PerY].Matrix[k, l].Coordinates.X + 60, Tableros[PerX, PerY].Matrix[k, l].Coordinates.Y + 60);
-                                        g.DrawLine(new Pen(Color.Red, 10), Tableros[PerX, PerY].Matrix[k, l].Coordinates.X + 60, Tableros[PerX, PerY].Matrix[k, l].Coordinates.Y, Tableros[PerX, PerY].Matrix[k, l].Coordinates.X, Tableros[PerX, PerY].Matrix[k, l].Coordinates.Y + 60);
+                                        g.DrawLine(new Pen(Color.Blue, 10), Tableros[PerX, PerY].Matrix[k, l].Coordinates.X, Tableros[PerX, PerY].Matrix[k, l].Coordinates.Y, Tableros[PerX, PerY].Matrix[k, l].Coordinates.X + 60, Tableros[PerX, PerY].Matrix[k, l].Coordinates.Y + 60);
+                                        g.DrawLine(new Pen(Color.Blue, 10), Tableros[PerX, PerY].Matrix[k, l].Coordinates.X + 60, Tableros[PerX, PerY].Matrix[k, l].Coordinates.Y, Tableros[PerX, PerY].Matrix[k, l].Coordinates.X, Tableros[PerX, PerY].Matrix[k, l].Coordinates.Y + 60);
                                     }
 
                                     turno = !turno?true:false;
@@ -135,6 +150,7 @@ namespace IA_ExtremeTicTacToc
                                     tableroActual.Y = PerY;
                                     PerX = k;
                                     PerY = l;
+                                    label4.Text = PerX + "," + PerY;
                                     RevisarEstadosTableroParcial();
                                     if (Tableros[PerX, PerY].estado == 1 || Tableros[PerX, PerY].estado == 2 || Tableros[PerX, PerY].estado == 3)
                                     {
@@ -217,6 +233,7 @@ namespace IA_ExtremeTicTacToc
         {
             Tablero T = Tableros[tableroActual.X, tableroActual.Y];
             Graphics g = pbCanvas.CreateGraphics();
+            Graphics g1 = pictureBox1.CreateGraphics();
 
             //Horizontales
             for (int i = 0; i < 3; i++)
@@ -272,10 +289,57 @@ namespace IA_ExtremeTicTacToc
             {
                 for (int j = 0; j < 3; j++)
                 {
-                    if(T.Matrix[i,j].state==1||T.Matrix[i,j].state==2)
+                    if (T.Matrix[i, j].state == 1 || T.Matrix[i, j].state == 2)
                     {
                         aux++;
                     }
+                    /*if (Tableros[i, j].estado == 2)
+                    {
+                        if (i == 0 && j == 0)
+                        {
+                            g1.DrawLine(new Pen(Color.Blue, 10), 0, 0, 60, 60);
+                            g1.DrawLine(new Pen(Color.Blue, 10), 0, 60, 60, 0);
+                        }
+                        if (i == 0 && j == 1)
+                        {
+                            g1.DrawLine(new Pen(Color.Blue, 10), 0, 60, 60, 120);
+                            g1.DrawLine(new Pen(Color.Blue, 10), 0, 120, 60, 60);
+                        }
+                        if (i == 0 && j == 2)
+                        {
+                            g1.DrawLine(new Pen(Color.Blue, 10), 0, 120, 60, 180);
+                            g1.DrawLine(new Pen(Color.Blue, 10), 0, 180, 60, 120);
+                        }
+                        if (i == 1 && j == 0)
+                        {
+                            g1.DrawLine(new Pen(Color.Blue, 10), 0, 0, 60, 60);
+                            g1.DrawLine(new Pen(Color.Blue, 10), 0, 60, 60, 0);
+                        }
+                        if (i == 1 && j == 1)
+                        {
+                            g1.DrawLine(new Pen(Color.Blue, 10), 0, 60, 60, 120);
+                            g1.DrawLine(new Pen(Color.Blue, 10), 0, 120, 60, 60);
+                        }
+                        if (i == 1 && j ==2)
+                        {
+                            g1.DrawLine(new Pen(Color.Blue, 10), 0, 120, 60, 180);
+                            g1.DrawLine(new Pen(Color.Blue, 10), 0, 180, 60, 120);
+                        }
+                        if (i == 2 && j == 0)
+                        {
+                            g1.DrawLine(new Pen(Color.Blue, 10), 0, 0, 60, 60);
+                            g1.DrawLine(new Pen(Color.Blue, 10), 0, 60, 60, 0);
+                        }
+                        if (i == 2 && j == 1)
+                        {
+                            g1.DrawLine(new Pen(Color.Blue, 10), 0, 0, 60, 60);
+                            g1.DrawLine(new Pen(Color.Blue, 10), 0, 60, 60, 0);
+                        }
+                        if (i == 2 && j == 2)
+                        {
+
+                        }
+                    }*/
                 }
             }
             if(aux==9)
