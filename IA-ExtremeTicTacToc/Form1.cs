@@ -43,6 +43,7 @@ namespace IA_ExtremeTicTacToc
             cbxDificultad.Items.Add("Facil");
             cbxDificultad.Items.Add("Normal");
             cbxDificultad.Items.Add("Dificil");
+            
         }
 
         public void CargarTableros()
@@ -73,6 +74,7 @@ namespace IA_ExtremeTicTacToc
                 espacioY = 0;
             }
             Graphics g = pictureBox1.CreateGraphics();
+            Graphics g1 = pictureBox2.CreateGraphics();
             Rectangle rect;
             int posX = 0, posY = 0;
             for (int i = 0; i < 3; i++)
@@ -82,6 +84,7 @@ namespace IA_ExtremeTicTacToc
                 {
                     rect = new Rectangle(posX, posY, 60, 60);
                     g.DrawRectangle(new Pen(Color.Black,3),rect);
+                    g1.DrawRectangle(new Pen(Color.Black, 3), rect);
                     posY += 60;
                 }
                 posX += 60;
@@ -119,6 +122,7 @@ namespace IA_ExtremeTicTacToc
                                     PerX = k;
                                     PerY = l;
                                     label4.Text = PerX + "," + PerY;
+                                    PreviewMovimiento(PerX, PerY);
                                     tableroActual.X = i;
                                     tableroActual.Y = j;
                                     RevisarEstadosTableroParcial();
@@ -151,6 +155,7 @@ namespace IA_ExtremeTicTacToc
                                     PerX = k;
                                     PerY = l;
                                     label4.Text = PerX + "," + PerY;
+                                    PreviewMovimiento(PerX, PerY);
                                     RevisarEstadosTableroParcial();
                                     if (Tableros[PerX, PerY].estado == 1 || Tableros[PerX, PerY].estado == 2 || Tableros[PerX, PerY].estado == 3)
                                     {
@@ -183,6 +188,61 @@ namespace IA_ExtremeTicTacToc
             }
             RevisarEstadosTableroTotal();
 
+        }
+
+        private void PreviewMovimiento(int i, int j)
+        {
+            pictureBox2.Refresh();
+            Graphics g1 = pictureBox2.CreateGraphics();
+            Rectangle rect;
+            int posX = 0, posY = 0;
+            for (int x = 0; x < 3; x++)
+            {
+                posY = 0;
+                for (int y = 0; y < 3; y++)
+                {
+                    rect = new Rectangle(posX, posY, 60, 60);
+                    g1.DrawRectangle(new Pen(Color.Black, 3), rect);
+                    posY += 60;
+                }
+                posX += 60;
+            }
+            if (i == 0 && j == 0)
+            {
+                g1.DrawRectangle(new Pen(Color.Yellow, 3), 0, 0, 60, 60);
+            }
+            if (i == 0 && j == 1)
+            {
+                g1.DrawRectangle(new Pen(Color.Yellow, 3), 0, 60, 60, 60);
+            }
+            if (i == 0 && j == 2)
+            {
+                g1.DrawRectangle(new Pen(Color.Yellow, 3), 0, 120, 60, 60);
+            }
+            if (i == 1 && j == 0)
+            {
+                g1.DrawRectangle(new Pen(Color.Yellow, 3), 60, 0, 60, 60);
+            }
+            if (i == 1 && j == 1)
+            {
+                g1.DrawRectangle(new Pen(Color.Yellow, 3), 60, 60, 60, 60);
+            }
+            if (i == 1 && j == 2)
+            {
+                g1.DrawRectangle(new Pen(Color.Yellow, 3), 60, 120, 60, 60);
+            }
+            if (i == 2 && j == 0)
+            {
+                g1.DrawRectangle(new Pen(Color.Yellow, 3), 120, 0, 60, 60);
+            }
+            if (i == 2 && j == 1)
+            {
+                g1.DrawRectangle(new Pen(Color.Yellow, 3), 120, 60, 60, 60);
+            }
+            if (i == 2 && j == 2)
+            {
+                g1.DrawRectangle(new Pen(Color.Yellow, 3), 120, 120, 60, 60);
+            }
         }
 
         public void MovimientoComputadora()
@@ -362,7 +422,7 @@ namespace IA_ExtremeTicTacToc
                         if (i == 1 && j == 2)
                         {
                             g1.DrawLine(new Pen(Color.Blue, 10), 60, 120, 120, 180);
-                            g1.DrawLine(new Pen(Color.Blue, 10), 60, 180, 120, 60);
+                            g1.DrawLine(new Pen(Color.Blue, 10), 60, 180, 120, 120);
                         }
                         if (i == 2 && j == 0)
                         {
@@ -862,13 +922,18 @@ namespace IA_ExtremeTicTacToc
        public void DoMouseClick(int x, int y)
        {
            Cursor.Position = new Point(0, 0);
-           //Codigo de Carlos
+           
            p = new Point((this.Location.X + pbCanvas.Location.X+x),(this.Location.Y + pbCanvas.Location.Y+y));
 
            Cursor.Position = new Point(p.X,p.Y);
            mouse_event(MouseEventType.LeftDown, 0, 0, 0, 0);
            mouse_event(MouseEventType.LeftUp, 0, 0, 0, 0);
           
+       }
+
+       private void button2_Click_1(object sender, EventArgs e)
+       {
+           Application.Restart();
        }
 
     }
